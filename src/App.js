@@ -17,20 +17,21 @@ function App() {
   }, []);
 
   return (
-    <table>
-      <thead>
-        <th>Patient Name</th>
-        <th>Schedule</th>
-      </thead>
-      <tbody>
-        {patientsData.map(item => (
-          <tr key={item.id}>
-            <td>{item.name}</td>
-            <td>{item.schedules[0].startDate}</td>
-          </tr>
+    <div>
+      <h1>Schdules List</h1>
+      {patientsData.map(item => {
+        return (item.schedules.length > 0) ?
+        <ul>
+        <li>{item.name} (Id: {item.id})</li>
+        {item.schedules.map(item => (
+          <ul>
+            <li>{item.startDate}</li>
+          </ul>
         ))}
-      </tbody>
-    </table>
+        </ul>
+        : null;
+      })}
+    </div>
   );
 }
 
