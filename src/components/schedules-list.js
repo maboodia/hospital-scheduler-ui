@@ -10,14 +10,19 @@ export const SchedulesList = props => {
 
       {patientsData.map(item => {
         return (item.schedules.length > 0) ?
-        <ul>
-        <li>{item.name} (Id: {item.id})</li>
-        {item.schedules.map(item => (
-          <ul>
-            <li>{item.startDate}</li>
+
+        <ul key={"details_" + item.id}>
+
+          <li key={item.id}>{item.name} (Id: {item.id})</li>
+
+          <ul key={"scheule_" + item.id}>
+            {item.schedules.map(schedule => (
+              <li key={item.id + schedule.startDate}>{schedule.startDate}</li>
+            ))}
           </ul>
-        ))}
+
         </ul>
+        
         : null;
       })}
 

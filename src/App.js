@@ -1,6 +1,9 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+
+import * as ApplicationConstants from "./constants/application-constants";
+
 import SchedulesForm from "./components/schedules-form";
 import SchedulesList from "./components/schedules-list";
 
@@ -14,8 +17,9 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log(ApplicationConstants.PATIENTS_API_URL);
       const result = await axios(
-        'http://localhost:8080/v1/demo/hospital-scheduling/patients',
+        'http://localhost:8080/v1/demo/hospital-scheduling/patients'
       );
 
       setData(result.data);

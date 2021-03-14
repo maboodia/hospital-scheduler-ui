@@ -4,6 +4,8 @@ import axios from 'axios';
 import "react-datetime/css/react-datetime.css";
 import Datetime from "react-datetime";
 
+import * as ApplicationConstants from "../constants/application-constants";
+
 export const SchedulesForm = (props) => {
 
   const {patientsData, refreshFunction} = props;
@@ -17,7 +19,7 @@ export const SchedulesForm = (props) => {
     setSubmissionErrorMsg(null);
     setSubmissionSuccessMsg(null);
 
-    if(id === null) {
+    if(id === null || id === "") {
       setSubmissionErrorMsg("Please Choose a Patient !");
       return;
     }
@@ -29,7 +31,7 @@ export const SchedulesForm = (props) => {
 
     let postBody = { date: scheduleDate.getTime()/1000, requestedOn: Date.now()/1000 };
 
-    let postUrl='http://localhost:8080/v1/demo/hospital-scheduling/schedules/' + id;
+    let postUrl = ApplicationConstants.SCHEDULES_API_URL + ApplicationConstants.URL_SEPERATOR + id;
     axios.post(postUrl, postBody)
         .then(response => {
           setSubmissionSuccessMsg(response.data);
@@ -44,17 +46,17 @@ export const SchedulesForm = (props) => {
   return (
     <div>
 
-      <label for="fname">Pateint:</label>
+      <label htmlFor="fname">Pateint:</label>
       <br/>
       <select onChange={e => setId(e.currentTarget.value)}>
-        <option value="" selected disabled hidden></option>
+        <option key="empty-option" value=""></option>
         {patientsData.map(item => (
-          <option value={item.id}>{item.id} - {item.name}</option>
+          <option key={item.id} value={item.id}>{item.id} - {item.name}</option>
         ))}
       </select>
       <br/><br/>
 
-      <label for="lname">Date:</label>
+      <label htmlFor="lname">Date:</label>
       <br/>
       <Datetime
         timeConstraints={{ hours: { min: 0, max: 23 },
