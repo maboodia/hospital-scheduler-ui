@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+.main-div {
+  margin-left: 10px;
+}
+
+.success-msg {
+  color: green;
+}
+
+.error-msg {
+  color: red;
+}

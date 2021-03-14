@@ -1,3 +1,4 @@
+import './App.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "react-datetime/css/react-datetime.css";
@@ -5,6 +6,23 @@ import Datetime from "react-datetime";
 
 function App() {
   const [patientsData, setData] = useState([]);
+  const [refreshDate, setRefreshDate] = useState('');
+  const [successMsg, setSubmissionSuccessMsg] = useState(null);
+  const [errorMsg, setSubmissionErrorMsg] = useState(null);
+
+  const submitSchedule = () => {
+    axios.post('http://localhost:8080/v1/demo/hospital-scheduling/schedules/1', {"date": 12345, "requestedOn": 12345})
+        .then(response => {
+          setSubmissionErrorMsg(null);
+          setSubmissionSuccessMsg(response.data);
+          setRefreshDate(new Date());
+        })
+        .catch(error => {
+            console.error('There was an error!', error);
+            setSubmissionSuccessMsg(null);
+            setSubmissionErrorMsg("Error Sunmitting Schedule !");
+        });
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,10 +34,10 @@ function App() {
     };
 
     fetchData();
-  }, []);
+  }, [refreshDate]);
 
   return (
-    <div>
+    <div class="main-div">
 
       <h1>Add New Schedule</h1>
 
@@ -39,9 +57,13 @@ function App() {
         timeConstraints={{ hours: { min: 0, max: 23 },
                          minutes: {step:10} }}
       />
-      <br/><br/>
+      <br/>
 
-      <input type="submit" value="Submit"/>
+      <button type="button" onClick={submitSchedule}>
+        Submit
+      </button>
+      <p class="success-msg">{successMsg}</p>
+      <p class="error-msg">{errorMsg}</p>
 
       <h1>Schdules List</h1>
 
@@ -57,6 +79,10 @@ function App() {
         </ul>
         : null;
       })}
+
+      <button type="button" onClick={() => setRefreshDate(new Date())}>
+        Refresh
+      </button>
     </div>
   );
 }
