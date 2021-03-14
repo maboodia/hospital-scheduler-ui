@@ -4,9 +4,9 @@ import axios from 'axios';
 import "react-datetime/css/react-datetime.css";
 import Datetime from "react-datetime";
 
-export const SchedulesForm = props => {
+export const SchedulesForm = (props) => {
 
-  const {patientsData} = props;
+  const {patientsData, refreshFunction} = props;
 
   const [id, setId] = useState(null);
   const [scheduleDate, setScheduleDate] = useState(null);
@@ -27,16 +27,17 @@ export const SchedulesForm = props => {
       return;
     }
 
-    let postBody = {date: scheduleDate.getTime()/1000, requestedOn: Date.now()/1000};
+    let postBody = { date: scheduleDate.getTime()/1000, requestedOn: Date.now()/1000 };
 
     let postUrl='http://localhost:8080/v1/demo/hospital-scheduling/schedules/' + id;
     axios.post(postUrl, postBody)
         .then(response => {
           setSubmissionSuccessMsg(response.data);
+          refreshFunction();
         })
         .catch(error => {
             console.error('There was an error!', error);
-            setSubmissionErrorMsg("Error Sunmitting Schedule !");
+            setSubmissionErrorMsg("Error Submitting Schedule !");
         });
   }
 
@@ -73,7 +74,8 @@ export const SchedulesForm = props => {
 }
 
 SchedulesForm.propTypes = {
-  patientsData: PropTypes.array
+  patientsData: PropTypes.array,
+  refreshFunction: PropTypes.func
 };
 
 export default SchedulesForm;

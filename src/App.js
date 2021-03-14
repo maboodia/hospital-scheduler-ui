@@ -8,6 +8,10 @@ function App() {
   const [patientsData, setData] = useState([]);
   const [refreshDate, setRefreshDate] = useState('');
 
+  const refreshFunction = () => {
+    setRefreshDate(new Date());
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(
@@ -24,7 +28,8 @@ function App() {
     <div className="main-div">
 
       <h1>Add New Schedule</h1>
-      <SchedulesForm patientsData={patientsData}/>
+
+      <SchedulesForm patientsData={patientsData} refreshFunction={refreshFunction}/>
 
       <h1>Schdules List</h1>
 
@@ -32,7 +37,7 @@ function App() {
         Refresh
       </button>
 
-      <SchedulesList patientsData={patientsData}/>
+      <SchedulesList patientsData={patientsData} />
 
     </div>
   );
