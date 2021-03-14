@@ -17,9 +17,8 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log(ApplicationConstants.PATIENTS_API_URL);
       const result = await axios(
-        'http://localhost:8080/v1/demo/hospital-scheduling/patients'
+        ApplicationConstants.PATIENTS_API_URL
       );
 
       setData(result.data);
