@@ -46,7 +46,7 @@ export const SchedulesForm = (props) => {
   return (
     <div>
 
-      <label htmlFor="fname">Pateint:</label>
+      <label htmlFor="fname">Patient:</label>
       <br/>
       <select onChange={e => setId(e.currentTarget.value)}>
         <option key="empty-option" value=""></option>
