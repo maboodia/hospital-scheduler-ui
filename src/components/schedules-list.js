@@ -22,7 +22,7 @@ export const SchedulesList = props => {
           </ul>
 
         </ul>
-        
+
         : null;
       })}
 

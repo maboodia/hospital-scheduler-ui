@@ -16,16 +16,43 @@ export const SchedulesForm = (props) => {
   const [errorMsg, setSubmissionErrorMsg] = useState(null);
 
   const submitSchedule = () => {
+
     setSubmissionErrorMsg(null);
     setSubmissionSuccessMsg(null);
 
+    let proceedWithSchedule = true;
+
+    // Check if id was selected
     if(id === null || id === "") {
       setSubmissionErrorMsg("Please Choose a Patient !");
       return;
     }
 
+    // Check if schedule is valid
     if(scheduleDate === undefined || scheduleDate < Date.now()) {
       setSubmissionErrorMsg("Please Choose a Future Date !");
+      return;
+    }
+
+    // Check if Schedule is taken
+    patientsData.forEach(function (patient) {
+      patient.schedules.forEach(function (schedule) {
+        let existingDate = schedule.startDate;
+        if(scheduleDate.getTime() === new Date(existingDate).getTime()) {
+          proceedWithSchedule = false;
+
+          if(id != patient.id) {
+            setSubmissionErrorMsg("Schedule is Already Booked !");
+          }
+          else {
+            setSubmissionSuccessMsg("Schedule Already Set for Patient");
+          }
+
+        }
+      });
+    });
+
+    if(!proceedWithSchedule) {
       return;
     }
 
