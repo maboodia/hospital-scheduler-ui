@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import "react-datetime/css/react-datetime.css";
 import Datetime from "react-datetime";
-
 import * as ApplicationConstants from "../constants/application-constants";
 
 export const SchedulesForm = (props) => {

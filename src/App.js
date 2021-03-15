@@ -40,7 +40,7 @@ function App() {
         Refresh
       </button>
 
-      <SchedulesList patientsData={patientsData} />
+      <SchedulesList patientsData={patientsData} refreshFunction={refreshFunction}/>
 
     </div>
   );

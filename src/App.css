@@ -48,3 +48,7 @@
 .error-msg {
   color: red;
 }
+
+button {
+  margin-left: 10px;
+}

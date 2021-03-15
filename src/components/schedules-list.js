@@ -1,8 +1,22 @@
 import PropTypes from 'prop-types';
+import axios from 'axios';
+import * as ApplicationConstants from "../constants/application-constants";
 
 export const SchedulesList = props => {
 
-  const {patientsData} = props;
+  const {patientsData, refreshFunction} = props;
+
+  const removeSchedule = (scheduleId) => {
+
+    let deleteUrl = ApplicationConstants.SCHEDULES_API_URL + ApplicationConstants.URL_SEPERATOR + scheduleId;
+    axios.delete(deleteUrl)
+        .then(response => {
+          refreshFunction();
+        })
+        .catch(error => {
+            console.error('There was an error!', error);
+        });
+  }
 
   return (
 
@@ -17,7 +31,9 @@ export const SchedulesList = props => {
 
           <ul key={"scheule_" + item.id}>
             {item.schedules.map(schedule => (
-              <li key={item.id + schedule.startDate}>{schedule.startDate}</li>
+              <li key={item.id + schedule.startDate}>{schedule.startDate}
+                <button key={item.id + "_" + schedule.id} onClick={() => removeSchedule(schedule.id)}>Delete</button>
+              </li>
             ))}
           </ul>
 
@@ -31,7 +47,8 @@ export const SchedulesList = props => {
 }
 
 SchedulesList.propTypes = {
-  patientsData: PropTypes.array
+  patientsData: PropTypes.array,
+  refreshFunction: PropTypes.func
 };
 
 export default SchedulesList;
