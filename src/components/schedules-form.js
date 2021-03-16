@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import moment from 'moment';
 import "react-datetime/css/react-datetime.css";
 import Datetime from "react-datetime";
 import * as ApplicationConstants from "../constants/application-constants";
@@ -16,8 +17,6 @@ export const SchedulesForm = (props) => {
 
   const submitSchedule = () => {
 
-    const requestedDate = scheduleDate.toDate();
-    
     setSubmissionErrorMsg(null);
     setSubmissionSuccessMsg(null);
 
@@ -30,10 +29,12 @@ export const SchedulesForm = (props) => {
     }
 
     // Check if schedule is valid
-    if(requestedDate === undefined || requestedDate < Date.now()) {
-      setSubmissionErrorMsg("Please Choose a Future Date !");
+    if(scheduleDate === undefined || scheduleDate === null || ! moment(scheduleDate).isValid() || scheduleDate.toDate() < Date.now()) {
+      setSubmissionErrorMsg("Please Choose a Valid Future Date !");
       return;
     }
+
+    const requestedDate = scheduleDate.toDate();
 
     // Check if Schedule is taken
     patientsData.forEach(function (patient) {

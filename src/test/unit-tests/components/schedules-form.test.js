@@ -60,7 +60,7 @@ test('click the submit button - only patient input', () => {
   const submitButton = screen.getByText(/Submit/i);
   fireEvent.click(submitButton);
 
-  const errorMsg = screen.getByText(/Please Choose a Future Date/i);
+  const errorMsg = screen.getByText(/Please Choose a Valid Future Date/i);
   expect(errorMsg).toBeInTheDocument();
 
 });
