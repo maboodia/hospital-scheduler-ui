@@ -6,9 +6,9 @@ export const SchedulesList = props => {
 
   const {patientsData, refreshFunction} = props;
 
-  const removeSchedule = (scheduleId) => {
+  const removeSchedule = (itemId, scheduleId) => {
 
-    let deleteUrl = ApplicationConstants.SCHEDULES_API_URL + ApplicationConstants.URL_SEPERATOR + scheduleId;
+    let deleteUrl = ApplicationConstants.PATIENTS_API_URL + "/" + itemId + "/" + ApplicationConstants.SCHEDULES_API_URL_NAME + "/" + scheduleId;
     axios.delete(deleteUrl)
         .then(response => {
           refreshFunction();
@@ -32,7 +32,7 @@ export const SchedulesList = props => {
           <ul key={"scheule_" + item.id}>
             {item.schedules.map(schedule => (
               <li key={item.id + schedule.startDate}>{schedule.startDate}
-                <button key={item.id + "_" + schedule.id} onClick={() => removeSchedule(schedule.id)}>Delete</button>
+                <button key={item.id + "_" + schedule.id} onClick={() => removeSchedule(item.id, schedule.id)}>Delete</button>
               </li>
             ))}
           </ul>

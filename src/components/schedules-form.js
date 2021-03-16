@@ -57,7 +57,7 @@ export const SchedulesForm = (props) => {
 
     let postBody = { date: scheduleDate.getTime()/1000, requestedOn: Date.now()/1000 };
 
-    let postUrl = ApplicationConstants.SCHEDULES_API_URL + ApplicationConstants.URL_SEPERATOR + id;
+    let postUrl = ApplicationConstants.PATIENTS_API_URL + "/" + id + "/" + ApplicationConstants.SCHEDULES_API_URL_NAME;
     axios.post(postUrl, postBody)
         .then(response => {
           setSubmissionSuccessMsg(response.data);
