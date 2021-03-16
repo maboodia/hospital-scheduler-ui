@@ -1,4 +1,5 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import userEvent from "@testing-library/user-event";
 import SchedulesForm from '../../../components/schedules-form';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
@@ -47,6 +48,19 @@ test('click the submit button - empty input', () => {
   fireEvent.click(submitButton);
 
   const errorMsg = screen.getByText(/Please Choose a Patient/i);
+  expect(errorMsg).toBeInTheDocument();
+
+});
+
+test('click the submit button - only patient input', () => {
+  const { getByTestId } = render(<SchedulesForm patientsData={patientsData} refreshFunction={jest.fn()} />);
+
+  userEvent.selectOptions(getByTestId("select-option"), ["1"]);
+
+  const submitButton = screen.getByText(/Submit/i);
+  fireEvent.click(submitButton);
+
+  const errorMsg = screen.getByText(/Please Choose a Future Date/i);
   expect(errorMsg).toBeInTheDocument();
 
 });

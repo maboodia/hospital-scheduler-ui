@@ -74,7 +74,7 @@ export const SchedulesForm = (props) => {
 
       <label htmlFor="fname">Patient:</label>
       <br/>
-      <select onChange={e => setId(e.currentTarget.value)}>
+      <select data-testid="select-option" onChange={e => setId(e.currentTarget.value)}>
         <option key="empty-option" value=""></option>
         {patientsData.map(item => (
           <option key={item.id} value={item.id}>{item.id} - {item.name}</option>
