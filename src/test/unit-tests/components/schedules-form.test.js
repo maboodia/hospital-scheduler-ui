@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from "@testing-library/user-event";
 import SchedulesForm from '../../../components/schedules-form';
 import axios from 'axios';
@@ -62,5 +62,122 @@ test('click the submit button - only patient input', () => {
 
   const errorMsg = screen.getByText(/Please Choose a Valid Future Date/i);
   expect(errorMsg).toBeInTheDocument();
+
+});
+
+test('click the submit button - patient and invalid date input', () => {
+  const { getByTestId } = render(<SchedulesForm patientsData={patientsData} refreshFunction={jest.fn()} />);
+
+  userEvent.selectOptions(getByTestId("select-option"), ["1"]);
+  userEvent.type(screen.getByRole("textbox"), null);
+
+  const submitButton = screen.getByText(/Submit/i);
+  fireEvent.click(submitButton);
+
+  let errorMsg = screen.getByText(/Please Choose a Valid Future Date/i);
+  expect(errorMsg).toBeInTheDocument();
+
+  userEvent.type(screen.getByRole("textbox"), undefined);
+  fireEvent.click(submitButton);
+
+  errorMsg = screen.getByText(/Please Choose a Valid Future Date/i);
+  expect(errorMsg).toBeInTheDocument();
+
+  userEvent.type(screen.getByRole("textbox"), "invalid date");
+  fireEvent.click(submitButton);
+
+  errorMsg = screen.getByText(/Please Choose a Valid Future Date/i);
+  expect(errorMsg).toBeInTheDocument();
+
+});
+
+test('click the submit button - patient and past date input', () => {
+  const { getByTestId } = render(<SchedulesForm patientsData={patientsData} refreshFunction={jest.fn()} />);
+
+  userEvent.selectOptions(getByTestId("select-option"), ["1"]);
+  userEvent.type(screen.getByRole("textbox"), '03/10/2021 13:00');
+
+  const submitButton = screen.getByText(/Submit/i);
+  fireEvent.click(submitButton);
+
+  const errorMsg = screen.getByText(/Please Choose a Valid Future Date/i);
+  expect(errorMsg).toBeInTheDocument();
+
+});
+
+test('click the submit button - valid inputs', async () => {
+
+  let mock = new MockAdapter(axios);
+  mock.onPost().reply(200);
+
+  const { getByTestId } = render(<SchedulesForm patientsData={patientsData} refreshFunction={jest.fn()} />);
+
+  userEvent.selectOptions(getByTestId("select-option"), ["1"]);
+  userEvent.type(screen.getByRole("textbox"), '05/10/2050 13:00');
+
+  const submitButton = screen.getByText(/Submit/i);
+  fireEvent.click(submitButton);
+
+  await waitFor(() => {});
+
+});
+
+test('click the submit button - valid inputs but failure to submit', async () => {
+
+  let mock = new MockAdapter(axios);
+  mock.onPost().reply(500);
+
+  const { getByTestId } = render(<SchedulesForm patientsData={patientsData} refreshFunction={jest.fn()} />);
+
+  userEvent.selectOptions(getByTestId("select-option"), ["1"]);
+  userEvent.type(screen.getByRole("textbox"), '05/10/2050 13:00');
+
+  const submitButton = screen.getByText(/Submit/i);
+  fireEvent.click(submitButton);
+
+  await waitFor(() => {
+    const errorMsg = screen.getByText(/Error Submitting Schedule/i);
+    expect(errorMsg).toBeInTheDocument();
+  });
+
+});
+
+test('click the submit button - schedule already booked', async () => {
+
+  let mock = new MockAdapter(axios);
+  mock.onPost().reply(500);
+
+  const { getByTestId } = render(<SchedulesForm patientsData={patientsData} refreshFunction={jest.fn()} />);
+
+  userEvent.selectOptions(getByTestId("select-option"), ["1"]);
+  userEvent.type(screen.getByRole("textbox"), '03/15/2050 09:30');
+
+  const submitButton = screen.getByText(/Submit/i);
+  fireEvent.click(submitButton);
+
+  await waitFor(() => {
+    const errorMsg = screen.getByText(/Schedule is Already Booked/i);
+    expect(errorMsg).toBeInTheDocument();
+  });
+
+});
+
+test('click the submit button - schedule already set for the patient', async () => {
+
+  let mock = new MockAdapter(axios);
+  mock.onPost().reply(500);
+
+  const { getByTestId } = render(<SchedulesForm patientsData={patientsData} refreshFunction={jest.fn()} />);
+
+  userEvent.selectOptions(getByTestId("select-option"), ["1"]);
+  userEvent.type(screen.getByRole("textbox"), '03/15/2050 09:10');
+
+  const submitButton = screen.getByText(/Submit/i);
+  fireEvent.click(submitButton);
+
+  await waitFor(() => {
+    const errorMsg = screen.getByText(/Schedule Already Set for Patient/i);
+    expect(errorMsg).toBeInTheDocument();
+  });
 
 });

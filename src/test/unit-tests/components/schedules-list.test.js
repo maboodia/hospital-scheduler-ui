@@ -24,9 +24,7 @@ test('delete a schedule - success', async () => {
   const deleteButtons = screen.getAllByText(/Delete/i);
   fireEvent.click(deleteButtons[0]);
 
-  await waitFor(() => {
-
-  });
+  await waitFor(() => {});
 
 });
 
@@ -40,8 +38,6 @@ test('delete a schedule - error', async () => {
   const deleteButtons = screen.getAllByText(/Delete/i);
   fireEvent.click(deleteButtons[0]);
 
-  await waitFor(() => {
-
-  });
+  await waitFor(() => {});
 
 });

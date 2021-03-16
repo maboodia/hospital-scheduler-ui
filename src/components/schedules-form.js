@@ -16,7 +16,7 @@ export const SchedulesForm = (props) => {
   const [errorMsg, setSubmissionErrorMsg] = useState(null);
 
   const submitSchedule = () => {
-
+    
     setSubmissionErrorMsg(null);
     setSubmissionSuccessMsg(null);
 
@@ -29,12 +29,12 @@ export const SchedulesForm = (props) => {
     }
 
     // Check if schedule is valid
-    if(scheduleDate === undefined || scheduleDate === null || ! moment(scheduleDate).isValid() || scheduleDate.toDate() < Date.now()) {
+    if(scheduleDate === undefined || scheduleDate === null || ! moment(scheduleDate).isValid() || new Date(scheduleDate).getTime() < Date.now()) {
       setSubmissionErrorMsg("Please Choose a Valid Future Date !");
       return;
     }
 
-    const requestedDate = scheduleDate.toDate();
+    const requestedDate = new Date(scheduleDate);
 
     // Check if Schedule is taken
     patientsData.forEach(function (patient) {
