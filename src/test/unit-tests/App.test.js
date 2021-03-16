@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import App from '../../App';
 import axios from 'axios';
@@ -25,7 +24,7 @@ test('click the refresh button', async () => {
   let mock = new MockAdapter(axios);
   mock.onGet().reply(200, patientsData);
 
-  const { getByText } = render(<App />);
+  render(<App />);
 
   const refreshButton = screen.getByText(/Refresh/i);
   fireEvent.click(refreshButton);
