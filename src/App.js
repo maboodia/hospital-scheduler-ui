@@ -36,7 +36,7 @@ function App() {
 
       <h1>Schdules List</h1>
 
-      <button type="button" onClick={() => setRefreshDate(new Date())}>
+      <button type="button" onClick={() => refreshFunction()}>
         Refresh
       </button>
 

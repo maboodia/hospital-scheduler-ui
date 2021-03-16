@@ -22,9 +22,8 @@ test('renders the application', () => {
 
 test('click the refresh button', async () => {
 
-  var mock = new MockAdapter(axios);
-  mock.onGet('http://localhost:8080/v1/demo/hospital-scheduling/patients').reply(200, patientsData);
-
+  let mock = new MockAdapter(axios);
+  mock.onGet().reply(200, patientsData);
 
   const { getByText } = render(<App />);
 

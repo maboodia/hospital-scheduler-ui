@@ -31,7 +31,7 @@ export const SchedulesList = props => {
 
           <ul key={"scheule_" + item.id}>
             {item.schedules.map(schedule => (
-              <li key={item.id + schedule.startDate}>{schedule.startDate}
+              <li key={item.id + schedule.startDate}>{schedule.startDate} ({ Math.round((new Date(schedule.startDate).getTime() - new Date().getTime()) / 1000 / 60) } Minutes from Now)
                 <button key={item.id + "_" + schedule.id} onClick={() => removeSchedule(item.id, schedule.id)}>Delete</button>
               </li>
             ))}
