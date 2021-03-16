@@ -16,6 +16,8 @@ export const SchedulesForm = (props) => {
 
   const submitSchedule = () => {
 
+    const requestedDate = scheduleDate.toDate();
+    
     setSubmissionErrorMsg(null);
     setSubmissionSuccessMsg(null);
 
@@ -28,7 +30,7 @@ export const SchedulesForm = (props) => {
     }
 
     // Check if schedule is valid
-    if(scheduleDate === undefined || scheduleDate < Date.now()) {
+    if(requestedDate === undefined || requestedDate < Date.now()) {
       setSubmissionErrorMsg("Please Choose a Future Date !");
       return;
     }
@@ -37,7 +39,7 @@ export const SchedulesForm = (props) => {
     patientsData.forEach(function (patient) {
       patient.schedules.forEach(function (schedule) {
         let existingDate = schedule.startDate;
-        if(scheduleDate.getTime() === new Date(existingDate).getTime()) {
+        if(requestedDate.getTime() === new Date(existingDate).getTime()) {
           proceedWithSchedule = false;
 
           if(id != patient.id) {
@@ -55,7 +57,7 @@ export const SchedulesForm = (props) => {
       return;
     }
 
-    let postBody = { date: scheduleDate.getTime()/1000, requestedOn: Date.now()/1000 };
+    let postBody = { date: requestedDate.getTime()/1000, requestedOn: Date.now()/1000 };
 
     let postUrl = ApplicationConstants.PATIENTS_API_URL + "/" + id + "/" + ApplicationConstants.SCHEDULES_API_URL_NAME;
     axios.post(postUrl, postBody)
@@ -87,7 +89,7 @@ export const SchedulesForm = (props) => {
       <Datetime
         timeConstraints={{ hours: { min: 0, max: 23 },
                          minutes: {step:10} }}
-        onChange={e => setScheduleDate(e.toDate())}
+        onChange={e => setScheduleDate(e)}
       />
       <br/>
 
