@@ -8,22 +8,29 @@ import * as ApplicationConstants from "../constants/application-constants";
 
 export const SchedulesForm = (props) => {
 
-  const {patientsData, refreshFunction} = props;
+  const {patientsData, doctorsData, refreshFunction} = props;
 
-  const [id, setId] = useState(null);
+  const [doctorId, setDoctorId] = useState(null);
+  const [patientId, setPatientId] = useState(null);
   const [scheduleDate, setScheduleDate] = useState(null);
   const [successMsg, setSubmissionSuccessMsg] = useState(null);
   const [errorMsg, setSubmissionErrorMsg] = useState(null);
 
   const submitSchedule = () => {
-    
+
     setSubmissionErrorMsg(null);
     setSubmissionSuccessMsg(null);
 
     let proceedWithSchedule = true;
 
-    // Check if id was selected
-    if(id === null || id === "") {
+    // Check if doctor was selected
+    if(doctorId === null || doctorId === "") {
+      setSubmissionErrorMsg("Please Choose a Doctor !");
+      return;
+    }
+
+    // Check if patient was selected
+    if(patientId === null || patientId === "") {
       setSubmissionErrorMsg("Please Choose a Patient !");
       return;
     }
@@ -43,7 +50,7 @@ export const SchedulesForm = (props) => {
         if(requestedDate.getTime() === new Date(existingDate).getTime()) {
           proceedWithSchedule = false;
 
-          if(id != patient.id) {
+          if(patientId != patient.id) {
             setSubmissionErrorMsg("Schedule is Already Booked !");
           }
           else {
@@ -58,9 +65,9 @@ export const SchedulesForm = (props) => {
       return;
     }
 
-    let postBody = { date: requestedDate.getTime()/1000, requestedOn: Date.now()/1000 };
+    let postBody = { doctorId: doctorId, date: requestedDate.getTime()/1000, requestedOn: Date.now()/1000 };
 
-    let postUrl = ApplicationConstants.PATIENTS_API_URL + "/" + id + "/" + ApplicationConstants.SCHEDULES_API_URL_NAME;
+    let postUrl = ApplicationConstants.PATIENTS_API_URL + "/" + patientId + "/" + ApplicationConstants.SCHEDULES_API_URL_NAME;
     axios.post(postUrl, postBody)
         .then(response => {
           setSubmissionSuccessMsg(response.data);
@@ -75,12 +82,22 @@ export const SchedulesForm = (props) => {
   return (
     <div>
 
+      <label htmlFor="fname">Doctor:</label>
+      <br/>
+      <select data-testid="select-option" onChange={e => setDoctorId(e.currentTarget.value)}>
+        <option key="dr-empty-option" value=""></option>
+        {doctorsData.map(item => (
+          <option key={"doctor_" + item.id} value={item.id}>{item.id} - {item.name}</option>
+        ))}
+      </select>
+      <br/><br/>
+
       <label htmlFor="fname">Patient:</label>
       <br/>
-      <select data-testid="select-option" onChange={e => setId(e.currentTarget.value)}>
-        <option key="empty-option" value=""></option>
+      <select data-testid="select-option" onChange={e => setPatientId(e.currentTarget.value)}>
+        <option key="pt-empty-option" value=""></option>
         {patientsData.map(item => (
-          <option key={item.id} value={item.id}>{item.id} - {item.name}</option>
+          <option key={"patient_" + item.id} value={item.id}>{item.id} - {item.name}</option>
         ))}
       </select>
       <br/><br/>
@@ -106,6 +123,7 @@ export const SchedulesForm = (props) => {
 
 SchedulesForm.propTypes = {
   patientsData: PropTypes.array,
+  doctorsData: PropTypes.array,
   refreshFunction: PropTypes.func
 };
 

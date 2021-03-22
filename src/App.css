@@ -52,3 +52,11 @@
 button {
   margin-left: 10px;
 }
+
+select, input {
+  width: 200px;
+}
+
+ul, li {
+  margin-bottom: 10px;
+}

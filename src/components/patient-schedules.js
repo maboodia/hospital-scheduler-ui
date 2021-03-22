@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import * as ApplicationConstants from "../constants/application-constants";
 
-export const SchedulesList = props => {
+export const PatientSchedules = props => {
 
-  const {patientsData, refreshFunction} = props;
+  const {patientsData, doctorsData, refreshFunction} = props;
 
   const removeSchedule = (itemId, scheduleId) => {
 
@@ -31,7 +31,10 @@ export const SchedulesList = props => {
 
           <ul key={"scheule_" + item.id}>
             {item.schedules.map(schedule => (
-              <li key={item.id + schedule.startDate}>{schedule.startDate} (In { Math.round((new Date(schedule.startDate).getTime() - new Date().getTime()) / 1000 / 60) } Minutes)
+              <li key={item.id + schedule.startDate}>
+                Dr. { doctorsData.map(doctor => { return (doctor.id === schedule.doctorId) ? doctor.name : null; }) }
+                <span> - </span>
+                {schedule.startDate} (In { Math.round((new Date(schedule.startDate).getTime() - new Date().getTime()) / 1000 / 60) } Minutes)
                 <button key={item.id + "_" + schedule.id} onClick={() => removeSchedule(item.id, schedule.id)}>Delete</button>
               </li>
             ))}
@@ -46,9 +49,10 @@ export const SchedulesList = props => {
   );
 }
 
-SchedulesList.propTypes = {
+PatientSchedules.propTypes = {
   patientsData: PropTypes.array,
+  doctorsData: PropTypes.array,
   refreshFunction: PropTypes.func
 };
 
-export default SchedulesList;
+export default PatientSchedules;
