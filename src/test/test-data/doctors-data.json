@@ -1,100 +1,61 @@
 [
     {
         "id": 1,
-        "name": "Muhamad Aboodia",
+        "name": "Purvi Shangvi",
         "schedules": [
             {
                 "id": 1,
                 "startDate": "03/22/2050 21:10:00",
                 "requestedOn": "03/22/2021 20:45:32",
-                "doctorId": 1
+                "patientId": 1
+            },
+            {
+                "id": 2,
+                "startDate": "03/22/2021 21:20:00",
+                "requestedOn": "03/22/2021 20:45:32",
+                "patientId": 2
             }
         ]
     },
     {
         "id": 2,
-        "name": "Pei-Ying Chen",
-        "schedules": [
-            {
-                "id": 2,
-                "startDate": "03/22/2021 21:20:00",
-                "requestedOn": "03/22/2021 20:45:32",
-                "doctorId": 1
-            }
-        ]
-    },
-    {
-        "id": 3,
-        "name": "Emma Jones",
+        "name": "Limor Dekel",
         "schedules": [
             {
                 "id": 3,
                 "startDate": "03/22/2050 21:30:00",
                 "requestedOn": "03/22/2021 20:45:32",
-                "doctorId": 2
-            }
-        ]
-    },
-    {
-        "id": 4,
-        "name": "Marco Reus",
-        "schedules": []
-    },
-    {
-        "id": 5,
-        "name": "Xin Wang",
-        "schedules": []
-    },
-    {
-        "id": 6,
-        "name": "Max Kruse",
-        "schedules": [
+                "patientId": 3
+            },
             {
                 "id": 4,
                 "startDate": "03/22/2021 22:00:00",
                 "requestedOn": "03/22/2021 20:45:32",
-                "doctorId": 2
+                "patientId": 6
             }
         ]
     },
     {
-        "id": 7,
-        "name": "Bill Edwards",
-        "schedules": []
-    },
-    {
-        "id": 8,
-        "name": "Dean Smith",
+        "id": 3,
+        "name": "Amr Elhabal",
         "schedules": [
             {
                 "id": 5,
                 "startDate": "03/22/2021 22:20:00",
                 "requestedOn": "03/22/2021 20:45:32",
-                "doctorId": 3
-            }
-        ]
-    },
-    {
-        "id": 9,
-        "name": "El Nazeer Nazar",
-        "schedules": [
+                "patientId": 8
+            },
             {
                 "id": 6,
                 "startDate": "03/22/2021 22:30:00",
                 "requestedOn": "03/22/2021 20:45:32",
-                "doctorId": 3
-            }
-        ]
-    },
-    {
-        "id": 10,
-        "name": "Chandana Devireddy",
-        "schedules": [
+                "patientId": 9
+            },
             {
                 "id": 7,
                 "startDate": "03/22/2021 22:40:00",
                 "requestedOn": "03/22/2021 20:45:32",
-                "doctorId": 3
+                "patientId": 10
             }
         ]
     }
