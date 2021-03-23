@@ -34,7 +34,7 @@ export const PatientSchedules = props => {
               <li key={item.id + schedule.startDate}>
                 Dr. { doctorsData.map(doctor => { return (doctor.id === schedule.doctorId) ? doctor.name : null; }) }
                 <span> - </span>
-                {schedule.startDate} (In { Math.round((new Date(schedule.startDate).getTime() - new Date().getTime()) / 1000 / 60) } Minutes)
+                {schedule.startDate} (In { Math.round((new Date(schedule.startDate).getTime() - new Date().getTime()) / 1000 / 60) } minutes)
                 <button key={item.id + "_" + schedule.id} onClick={() => removeSchedule(item.id, schedule.id)}>Delete</button>
               </li>
             ))}

@@ -48,13 +48,14 @@ export const SchedulesForm = (props) => {
       patient.schedules.forEach(function (schedule) {
         let existingDate = schedule.startDate;
         if(requestedDate.getTime() === new Date(existingDate).getTime()) {
-          proceedWithSchedule = false;
 
-          if(patientId != patient.id) {
-            setSubmissionErrorMsg("Schedule is Already Booked !");
+          if (patientId == patient.id) {
+            setSubmissionSuccessMsg("Schedule Already Set for Patient !");
+            proceedWithSchedule = false;
           }
-          else {
-            setSubmissionSuccessMsg("Schedule Already Set for Patient");
+          else if(schedule.doctorId == doctorId) {
+            setSubmissionErrorMsg("Schedule is Already Booked !");
+            proceedWithSchedule = false;
           }
 
         }
