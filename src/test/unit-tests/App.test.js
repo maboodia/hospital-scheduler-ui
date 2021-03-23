@@ -11,7 +11,7 @@ test('renders the application', () => {
   const schedulesFormHeader = screen.getByText(/Add New Schedule/i);
   expect(schedulesFormHeader).toBeInTheDocument();
 
-  const schedulesListHeader = screen.getByText(/Add New Schedule/i);
+  const schedulesListHeader = screen.getByText(/Schdules List/i);
   expect(schedulesListHeader).toBeInTheDocument();
 
   const refreshButton = screen.getByText(/Refresh/i);
