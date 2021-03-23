@@ -14,7 +14,6 @@ test('renders a list of patients', () => {
 
 });
 
-
 test('delete a schedule - success', async () => {
 
   let mock = new MockAdapter(axios);

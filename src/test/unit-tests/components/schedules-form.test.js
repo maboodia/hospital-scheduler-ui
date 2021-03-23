@@ -9,6 +9,7 @@ const doctorsData = require('../../test-data/doctors-data');
 const emptyPatientsData = require('../../test-data/empty-patients-data');
 
 test('renders a list of patients', () => {
+
   render(<SchedulesForm patientsData={patientsData} doctorsData={doctorsData} refreshFunction={jest.fn()} />);
 
   const doctorLabel = screen.getByText(/Doctor/i);
@@ -29,6 +30,7 @@ test('renders a list of patients', () => {
 });
 
 test('click the submit button - empty input for doctor', () => {
+
   render(<SchedulesForm patientsData={patientsData} doctorsData={doctorsData} refreshFunction={jest.fn()} />);
 
   const submitButton = screen.getByText(/Submit/i);
@@ -40,6 +42,7 @@ test('click the submit button - empty input for doctor', () => {
 });
 
 test('click the submit button - empty input for patient', () => {
+
   const { getByTestId } = render(<SchedulesForm patientsData={patientsData} doctorsData={doctorsData} refreshFunction={jest.fn()} />);
 
   userEvent.selectOptions(getByTestId("select-doctor"), ["1"]);
@@ -54,6 +57,7 @@ test('click the submit button - empty input for patient', () => {
 
 
 test('click the submit button - only patient input', () => {
+
   const { getByTestId } = render(<SchedulesForm patientsData={patientsData} doctorsData={doctorsData} refreshFunction={jest.fn()} />);
 
   userEvent.selectOptions(getByTestId("select-doctor"), ["1"]);
@@ -68,6 +72,7 @@ test('click the submit button - only patient input', () => {
 });
 
 test('click the submit button - patient and invalid date input', () => {
+
   const { getByTestId } = render(<SchedulesForm patientsData={patientsData} doctorsData={doctorsData} refreshFunction={jest.fn()} />);
 
   userEvent.selectOptions(getByTestId("select-doctor"), ["1"]);
@@ -95,6 +100,7 @@ test('click the submit button - patient and invalid date input', () => {
 });
 
 test('click the submit button - patient and past date input', () => {
+  
   const { getByTestId } = render(<SchedulesForm patientsData={patientsData} doctorsData={doctorsData} refreshFunction={jest.fn()} />);
 
   userEvent.selectOptions(getByTestId("select-doctor"), ["1"]);
