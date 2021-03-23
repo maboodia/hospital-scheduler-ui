@@ -24,6 +24,24 @@ test('renders the application', () => {
 
 });
 
+test('click the switch view button', async () => {
+
+  let mock = new MockAdapter(axios);
+  mock.onGet(ApplicationConstants.PATIENTS_API_URL).reply(200, patientsData);
+  mock.onGet(ApplicationConstants.DOCTORS_API_URL).reply(200, doctorsData);
+
+  render(<App />);
+
+  const viewButton = screen.getByText(/Doctor View/i);
+  fireEvent.click(viewButton);
+
+  await waitFor(() => {
+    const doctorNameList = screen.getAllByText(/Purvi Shangvi/i);
+    expect(doctorNameList).toHaveLength(2);
+  });
+
+});
+
 test('click the refresh button', async () => {
 
   let mock = new MockAdapter(axios);
