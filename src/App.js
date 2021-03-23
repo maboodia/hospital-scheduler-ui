@@ -13,7 +13,7 @@ function App() {
   const [patientsData, setPatientsData] = useState([]);
   const [doctorsData, setDoctorsData] = useState([]);
   const [refreshDate, setRefreshDate] = useState('');
-  const [viewName, setSchedulesView] = useState("Doctor View");
+  const [viewName, setSchedulesView] = useState("Patient View");
 
   const refreshFunction = () => {
     setRefreshDate(new Date());
@@ -37,18 +37,18 @@ function App() {
 
       <SchedulesForm patientsData={patientsData} doctorsData={doctorsData} refreshFunction={refreshFunction}/>
 
-      <h2>Schdules List</h2>
+      <h2>Schdules List - {viewName}</h2>
 
       <button type="button" onClick={() => setSchedulesView((viewName === "Patient View") ? "Doctor View" : "Patient View")}>
-        {viewName}
+        {(viewName === "Patient View") ? "Doctor View" : "Patient View"}
       </button>
 
       <button type="button" onClick={() => refreshFunction()}>
         Refresh
       </button>
 
-      {(viewName !== "Patient View") && <PatientSchedules patientsData={patientsData} doctorsData={doctorsData} refreshFunction={refreshFunction}/>}
-      {(viewName !== "Doctor View") && <DoctorSchedules patientsData={patientsData} doctorsData={doctorsData} refreshFunction={refreshFunction}/>}
+      {(viewName === "Patient View") && <PatientSchedules patientsData={patientsData} doctorsData={doctorsData} refreshFunction={refreshFunction}/>}
+      {(viewName === "Doctor View") && <DoctorSchedules patientsData={patientsData} doctorsData={doctorsData} refreshFunction={refreshFunction}/>}
 
     </div>
   );

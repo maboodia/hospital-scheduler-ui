@@ -6,7 +6,6 @@ import MockAdapter from 'axios-mock-adapter';
 
 const patientsData = require('../../test-data/patients-data');
 const doctorsData = require('../../test-data/doctors-data');
-const emptyPatientsData = require('../../test-data/empty-patients-data');
 
 test('renders a list of patients', () => {
 
@@ -100,7 +99,7 @@ test('click the submit button - patient and invalid date input', () => {
 });
 
 test('click the submit button - patient and past date input', () => {
-  
+
   const { getByTestId } = render(<SchedulesForm patientsData={patientsData} doctorsData={doctorsData} refreshFunction={jest.fn()} />);
 
   userEvent.selectOptions(getByTestId("select-doctor"), ["1"]);
